@@ -1,11 +1,9 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <div>LandingPageView</div>
 </template>
 
 <script>
 export default {
-  name: "App",
+  name: "LandingPageView",
 };
 </script>
