@@ -9,8 +9,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "clipboard": "^2.0.8",
     "core-js": "^3.6.5",
     "flatpickr": "^4.6.9",
+    "sweetalert2": "^11.1.9",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },
