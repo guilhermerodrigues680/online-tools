@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: "",
+  publicPath: "/online-tools/",
 
   chainWebpack: (config) => {
     // vue inspect --plugin html
