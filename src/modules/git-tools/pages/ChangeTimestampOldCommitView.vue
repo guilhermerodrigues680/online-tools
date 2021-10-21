@@ -1,60 +1,65 @@
 <template>
   <div class="home pt-24">
-    <section class="container px-4 mx-auto md:px-0">
+    <section class="container px-4 pb-8 mx-auto md:px-0">
       <header>
-        <h1 class="text-3xl">Alterar o carimbo de data/hora de um antigo commit</h1>
-        <p class="text-xl font-extralight"></p>
+        <h1 class="text-3xl">Alterar o carimbo de data/hora de um commit antigo</h1>
+        <p class="text-lg sm:text-xl font-extralight">
+          As vezes pode ser útil ajustar a data de um commit para fins diversos, para isso foi
+          criada essa ferramenta que gera o comando shell necessário para realizar este ajuste. Os
+          passos são os seguintes: Primeiro faça um commit, depois preencha os dados de data/hora no
+          calendario abaixo e em seguida execute o comando gerado. Você verá no seu log de commits
+          `git log` a alteração parecida com a demonstração.
+        </p>
       </header>
 
       <div class="max-w-2xl mt-8 mx-auto">
-        <div class="flex flex-col sm:flex-row sm:justify-center gap-x-4 gap-y-2">
-          <div ref="flatpickrDiv" class="inline-flex border rounded">
-            <input
-              class="flex-1 px-2 py-1 appearance-none text-center"
-              ref="flatpickrInputDateTime"
-              name=""
-              placeholder="Selecione a data/hora"
-              data-input
-            />
+        <div class="font-semibold">Selecione a data/hora</div>
+        <div ref="flatpickrDiv" class="flex border rounded">
+          <input
+            class="flex-1 px-2 py-1 appearance-none text-center"
+            ref="flatpickrInputDateTime"
+            name=""
+            placeholder="Selecione a data/hora"
+            data-input
+          />
 
-            <span class="border-l cursor-pointer" title="toggle" data-toggle>
-              <i class="p-2 block text-blue-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-              </i>
-            </span>
+          <span class="border-l cursor-pointer" title="toggle" data-toggle>
+            <i class="p-2 block text-blue-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </i>
+          </span>
 
-            <span class="border-l cursor-pointer" title="clear" data-clear>
-              <i class="p-2 block text-red-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </i>
-            </span>
-          </div>
+          <span class="border-l cursor-pointer" title="clear" data-clear>
+            <i class="p-2 block text-red-500">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </i>
+          </span>
         </div>
 
         <button
@@ -76,8 +81,9 @@
           Gerar comando shell
         </button>
 
-        <div v-show="shellCommandWasGenerated">
-          <div class="text-xs sm:text-base mt-4 text-white bg-black">
+        <div class="mt-4" v-show="shellCommandWasGenerated">
+          <div class="font-semibold">Demonstração</div>
+          <div class="text-xs sm:text-base text-white bg-black">
             <pre class="p-4"><code>commit xxxxxxxx (HEAD -&gt; master)
   Author: userx &lt;userx@email.com&gt;
   Date:   {{commitDate}}
@@ -85,7 +91,8 @@
   Mensagem do commit</code></pre>
           </div>
 
-          <div class="flex mt-3 border rounded bg-gray-500 bg-opacity-10">
+          <div class="mt-3 font-semibold">Comando shell</div>
+          <div class="flex border rounded bg-gray-500 bg-opacity-10">
             <div class="flex-1 overflow-auto">
               <pre><code ref="codeShellCommand" class="block text-xs md:text-sm px-4 py-6 whitespace-nowrap">GIT_COMMITTER_DATE="{{ commitDate }}" git commit --amend --date="{{ commitDate }}" --no-edit</code></pre>
             </div>
@@ -223,6 +230,9 @@ export default {
       const selectedDate = selectedDates[0];
       if (selectedDate) {
         this.selectedDate = selectedDate.toISOString();
+      } else {
+        this.selectedDate = null;
+        this.shellCommandWasGenerated = false;
       }
     },
 

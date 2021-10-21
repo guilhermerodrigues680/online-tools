@@ -11,7 +11,7 @@
         <ul>
           <li class="underline text-blue-500">
             <router-link to="/git-tools/change-timestamp-old-commit">
-              Alterar o carimbo de data/hora de um antigo commit
+              Alterar o carimbo de data/hora de um commit antigo
             </router-link>
           </li>
         </ul>
