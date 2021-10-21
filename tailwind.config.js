@@ -1,14 +1,29 @@
 const plugin = require("tailwindcss/plugin");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   purge: ["./index.html", "./public/**/*.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      rotate: {
+        30: "30deg",
+      },
+      colors: {
+        primary: "#277DA1",
+        teal: colors.teal,
+      },
+      zIndex: {
+        "-1": "-1",
+        "-10": "-10",
+        "-20": "-20",
+      },
+    },
   },
   variants: {
     extend: {
       backgroundColor: ["active", "hover-pointer-fine"],
+      textColor: ["active", "hover-pointer-fine"],
     },
   },
   plugins: [
