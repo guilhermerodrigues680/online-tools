@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0cf35e"],{"636a":function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[t("h1",[e._v("LandingPageView")]),t("ul",[t("li",[t("router-link",{attrs:{to:"/git-tools"}},[e._v("Git tools")])],1)])])},i=[],o={name:"LandingPageView"},l=o,r=t("2877"),s=Object(r["a"])(l,a,i,!1,null,"18e2af3b",null);n["default"]=s.exports}}]);
+//# sourceMappingURL=chunk-2d0cf35e.4d98be36.js.map
