@@ -1,6 +1,9 @@
 <template>
   <div class="flex flex-col min-h-screen overflow-hidden antialiased text-gray-900 tracking-tight">
-    <header class="fixed z-50 top-0 left-0 right-0">
+    <header
+      class="fixed z-50 top-0 left-0 right-0 bg-transparent transition-colors duration-200"
+      :class="{ 'bg-blue-500 shadow-md': wasScrolled }"
+    >
       <div class="max-w-6xl mx-auto px-5 sm:px-6">
         <div class="flex items-center justify-between h-16 md:h-20">
           <!-- logo -->
@@ -162,6 +165,7 @@
 <script>
 import MenuIcon from "@/components/icons/MenuIcon.vue";
 import XIcon from "@/components/icons/XIcon.vue";
+import _throttle from "lodash/throttle";
 
 export default {
   name: "LandingPageView",
@@ -174,7 +178,26 @@ export default {
   data: () => ({
     baseUrl: process.env.BASE_URL,
     mobileMenu: false,
+    wasScrolled: false,
+    throttled: null,
   }),
+
+  mounted() {
+    // '_throttle' Evita atualizar excessivamente a posição durante a rolagem.
+    this.throttled = _throttle(this.handleScroll, 250);
+    document.addEventListener("scroll", this.throttled);
+  },
+
+  beforeDestroy() {
+    document.removeEventListener("scroll", this.throttled);
+  },
+
+  methods: {
+    handleScroll() {
+      this.wasScrolled = document.documentElement.scrollTop >= 32;
+      console.debug("handleScroll", this.wasScrolled);
+    },
+  },
 };
 </script>
 
