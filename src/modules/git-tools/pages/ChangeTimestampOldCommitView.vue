@@ -170,6 +170,7 @@
 import "flatpickr/dist/flatpickr.min.css";
 import "flatpickr/dist/themes/airbnb.css";
 import flatpickr from "flatpickr";
+import { Portuguese } from "flatpickr/dist/l10n/pt";
 import ClipboardJS from "clipboard";
 import alerts from "@/services/alerts";
 
@@ -199,6 +200,7 @@ export default {
       dateFormat: "d/m/Y H:i",
       time_24hr: true,
       wrap: true,
+      locale: Portuguese,
       onChange: (selectedDates, dateStr) => this.changeSelectedDates(selectedDates, dateStr),
     });
 
