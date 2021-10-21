@@ -85,7 +85,7 @@
   Mensagem do commit</code></pre>
           </div>
 
-          <div class="flex mt-3 gap-x-1 border rounded bg-gray-500 bg-opacity-10">
+          <div class="flex mt-3 border rounded bg-gray-500 bg-opacity-10">
             <div class="flex-1 overflow-auto">
               <pre><code ref="codeShellCommand" class="block text-xs md:text-sm px-4 py-6 whitespace-nowrap">GIT_COMMITTER_DATE="{{ commitDate }}" git commit --amend --date="{{ commitDate }}" --no-edit</code></pre>
             </div>
@@ -99,6 +99,7 @@
                 bg-blue-500 bg-opacity-90
                 hover-pointer-fine:bg-blue-700
                 active:bg-blue-900
+                ml-1
               "
               ref="buttonCopyClipboard"
             >
@@ -115,6 +116,38 @@
                     stroke-linejoin="round"
                     stroke-width="2"
                     d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                  />
+                </svg>
+              </i>
+            </button>
+
+            <button
+              class="
+                flex
+                items-center
+                text-white
+                cursor-pointer
+                bg-blue-500 bg-opacity-90
+                hover-pointer-fine:bg-blue-700
+                active:bg-blue-900
+                border-l
+              "
+              v-if="navigatorCanShareText"
+              @click="shareShellCommand()"
+            >
+              <i class="block px-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
                   />
                 </svg>
               </i>
@@ -139,6 +172,7 @@ export default {
   data: () => ({
     selectedDate: null,
     shellCommandWasGenerated: false,
+    navigatorCanShareText: !!navigator.share,
   }),
 
   computed: {
@@ -199,6 +233,23 @@ export default {
       }
 
       this.shellCommandWasGenerated = true;
+    },
+
+    shareShellCommand() {
+      if (this.navigatorCanShareText) {
+        try {
+          navigator.share({
+            title: "Comando shell",
+            text: this.$refs.codeShellCommand.innerText,
+            // url: window.location.toString(),
+          });
+          console.debug("Successful share");
+          alerts.fireToast("Comando compartilhado!", alerts.MSG_SUCCESS);
+        } catch (error) {
+          console.log("Error sharing", error);
+          alerts.fireToast(`Erro ao fazer compartilhamento: ${error}`, alerts.MSG_SUCCESS);
+        }
+      }
     },
   },
 };
